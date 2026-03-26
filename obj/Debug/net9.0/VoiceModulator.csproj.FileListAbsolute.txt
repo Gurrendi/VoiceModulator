@@ -20,3 +20,4 @@ D:\File\Vmod\VoiceModulator\obj\Debug\net9.0\refint\VoiceModulator.dll
 D:\File\Vmod\VoiceModulator\obj\Debug\net9.0\VoiceModulator.pdb
 D:\File\Vmod\VoiceModulator\obj\Debug\net9.0\VoiceModulator.genruntimeconfig.cache
 D:\File\Vmod\VoiceModulator\obj\Debug\net9.0\ref\VoiceModulator.dll
+D:\File\Vmod\VoiceModulator\obj\Debug\net9.0\VoiceModulator.sourcelink.json
