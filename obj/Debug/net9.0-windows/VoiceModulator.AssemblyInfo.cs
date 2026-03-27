@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VoiceModulator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f14470310d801705b03113b3b808f83fe38e0f0f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4fa2ed7f60d15ff639c756746d37fbcac03d4976")]
 [assembly: System.Reflection.AssemblyProductAttribute("VoiceModulator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VoiceModulator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -69,44 +69,23 @@ public class VoiceModEngine : IDisposable
             DiscardOnBufferOverflow = true
         };
 
-        if (UseVirtualMicrophone)
+        // Try to find and use virtual microphone device for calls/games
+        var virtualMicDevice = FindVirtualMicrophoneDevice();
+        if (virtualMicDevice != null)
         {
-            // Try to find and use virtual microphone device for calls/games
-            var virtualMicDevice = FindVirtualMicrophoneDevice();
-            if (virtualMicDevice != null)
-            {
-                _virtualMicOut = new WasapiOut(virtualMicDevice, AudioClientShareMode.Shared, false, 50);
-                _virtualMicOut.Init(_playbackBuffer);
-                StatusChanged?.Invoke("Using virtual microphone for calls/games - no speaker output");
-            }
-            else
-            {
-                // Fallback to speakers if no virtual mic found
-                _waveOut = new WaveOutEvent();
-                _waveOut.Init(_playbackBuffer);
-                StatusChanged?.Invoke("No virtual microphone found - install VB-Audio Virtual Cable for calls/games");
-            }
+            _virtualMicOut = new WasapiOut(virtualMicDevice, AudioClientShareMode.Shared, false, 50);
+            _virtualMicOut.Init(_playbackBuffer);
+            _virtualMicOut.Play();
+            StatusChanged?.Invoke("Using virtual microphone - no speaker output");
         }
         else
         {
-            // Use speakers for testing
-            _waveOut = new WaveOutEvent();
-            _waveOut.Init(_playbackBuffer);
-            StatusChanged?.Invoke("Using speakers for testing");
+            // No speaker output in production mode if no virtual mic found
+            StatusChanged?.Invoke("No virtual microphone found - install VB-Audio Virtual Cable for calls/games");
         }
 
         _waveIn.DataAvailable += WaveIn_DataAvailable;
         _waveIn.RecordingStopped += WaveIn_RecordingStopped;
-
-        // Start the appropriate output device
-        if (_virtualMicOut != null)
-        {
-            _virtualMicOut.Play();
-        }
-        else if (_waveOut != null)
-        {
-            _waveOut.Play();
-        }
 
         _waveIn.StartRecording();
 
@@ -512,6 +491,14 @@ public class VoiceModEngine : IDisposable
         {
             var enumerator = new MMDeviceEnumerator();
             var devices = enumerator.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
+
+            // Log all available devices for debugging
+            string availableDevices = "Available devices: ";
+            foreach (var device in devices)
+            {
+                availableDevices += device.FriendlyName + " | ";
+            }
+            StatusChanged?.Invoke(availableDevices);
 
             // Common virtual microphone device names
             string[] virtualMicNames = new[]
