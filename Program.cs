@@ -17,6 +17,9 @@ public enum ModulationMode
     Robotic,
     Echo,
     Tremolo,
-    Gasmask,
-    DarthVader
+    WallE,
+    DarthVader,
+    Astartes,
+    BattlefieldRadio,
+    MilitaryNarrator,
 }
